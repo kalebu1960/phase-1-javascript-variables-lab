@@ -1,9 +1,13 @@
-require ( './helpers.js' );
+// test/indexTest.js
 
-const fs = require('fs')
-const path = require('path')
+const expect = require('chai').expect;
+const fs = require('fs');
+const path = require('path');
 
-const js = fs.readFileSync(path.resolve(__dirname, '..', 'index.js'), 'utf-8')
+// Read and evaluate the index.js file
+const indexPath = path.resolve(__dirname, '..', 'index.js');
+const code = fs.readFileSync(indexPath, 'utf-8');
+eval(code);
 
 describe('index.js', function () {
   describe('companyName', function () {
@@ -12,7 +16,7 @@ describe('index.js', function () {
     });
 
     it('is defined as a const', function () {
-      expect(js).to.match(/const companyName/, "Expected companyName to be a const");
+      expect(code).to.match(/const\s+companyName\s*=\s*['"]Scuber['"]/);
     });
   });
 
@@ -22,7 +26,7 @@ describe('index.js', function () {
     });
 
     it('is defined using let', function () {
-      expect(js).to.match(/let mostProfitableNeighborhood/, "Expected mostProfitableNeighborhood to be defined using let");
+      expect(code).to.match(/let\s+mostProfitableNeighborhood\s*=\s*['"]Chelsea['"]/);
     });
   });
 
@@ -32,7 +36,7 @@ describe('index.js', function () {
     });
 
     it('is defined using let', function () {
-      expect(js).to.match(/let companyCeo/, "Expected companyCeo to be defined using let");
+      expect(code).to.match(/let\s+companyCeo\s*=\s*['"]Susan Smith['"]/);
     });
   });
 });
